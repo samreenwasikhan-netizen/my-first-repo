@@ -7,10 +7,103 @@
     <title>My Developer Journey</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+    
     <div class="card">
-        <h1>Hello World!</h1>
-        <p>I am back to coding and mastering the modern tech stack.</p>
+        <h1>Student Biodata Form</h1>
+        <p>Please enter the student's registration details below.</p>
+        
+        <form id="studentForm">
+            <!-- Full Name Input -->
+            <div class="form-group">
+                <label for="name">Student Full Name</label>
+                <input type="text" id="name" placeholder="e.g., Ali Ahmed" required>
+            </div>
+
+            <!-- Grade Selection Radio Buttons (Grade 1 to 5) -->
+            <div class="form-group">
+                <label>Grade Level:</label>
+                <div class="radio-row">
+                    <input type="radio" id="g1" name="grade" value="1">
+                    <label for="g1" class="radio-label">1</label>
+                    
+                    <input type="radio" id="g2" name="grade" value="2">
+                    <label for="g2" class="radio-label">2</label>
+                    
+                    <input type="radio" id="g3" name="grade" value="3">
+                    <label for="g3" class="radio-label">3</label>
+                    
+                    <input type="radio" id="g4" name="grade" value="4">
+                    <label for="g4" class="radio-label">4</label>
+                    
+                    <input type="radio" id="g5" name="grade" value="5">
+                    <label for="g5" class="radio-label">5</label>
+                </div>
+            </div>
+
+            <!-- Age Input Field -->
+            <div class="form-group">
+                <label for="age">Age</label>
+                <input type="number" id="age" min="5" max="18" placeholder="e.g. 8" required>
+            </div>
+
+            <!-- Gender Selection Radio Buttons -->
+            <div class="form-group radio-group">
+                <label>Gender:</label>
+                <input type="radio" id="male" name="gender" value="male">
+                <label for="male" class="radio-label">Male</label>
+                
+                <input type="radio" id="female" name="gender" value="female">
+                <label for="female" class="radio-label">Female</label>
+            </div>
+
+            <!-- Emergency Contact Input -->
+            <div class="form-group">
+                <label for="phone">Guardian's Contact Number</label>
+                <input type="text" id="phone" placeholder="03xx-xxxxxxx" required>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="submit-btn">Save Student Record</button>
+        </form>
+
     </div>
+
+    <script>
+    document.getElementById('studentForm').addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        // Safely gather all form field values
+        const studentData = {
+            name: document.getElementById('name')?.value || "Unknown",
+            grade: parseInt(document.querySelector('input[name="grade"]:checked')?.value || "0"),
+            age: parseInt(document.getElementById('age')?.value || "0"),
+            gender: document.querySelector('input[name="gender"]:checked')?.value || "Not Specified",
+            phoneNumber: document.getElementById('phone')?.value || "" 
+        };
+
+        try {
+            const response = await fetch('http://localhost:5052/api/students', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(studentData)
+            });
+
+            const result = await response.json();
+            
+            if (result.success) {
+                alert(result.message);
+            }
+        } catch (error) {
+            console.error('Error connecting to backend:', error);
+            alert('Could not connect to the server. Make sure your backend terminal is running!');
+        }
+    });
+    </script>
+       
 </body>
+
 </html>
