@@ -13,7 +13,7 @@ body {
     background: rgb(198, 216, 237);
     padding: 40px;
     border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 450px;
 }
@@ -45,7 +45,9 @@ label {
     font-size: 0.9rem;
 }
 
-input[type="text"], input[type="number"], select {
+input[type="text"],
+input[type="number"],
+select {
     padding: 10px 14px;
     font-size: 0.95rem;
     border: 2px solid #e0e0e0;
@@ -54,7 +56,9 @@ input[type="text"], input[type="number"], select {
     transition: border-color 0.3s ease;
 }
 
-input[type="text"]:focus, input[type="number"]:focus, select:focus {
+input[type="text"]:focus,
+input[type="number"]:focus,
+select:focus {
     border-color: #3498db;
 }
 
@@ -76,7 +80,8 @@ input[type="text"]:focus, input[type="number"]:focus, select:focus {
     width: 100%;
     padding: 12px;
     font-size: 1rem;
-    background-color: #2ecc71; /* A nice success green */
+    background-color: #2ecc71;
+    /* A nice success green */
     color: white;
     border: none;
     border-radius: 6px;
@@ -95,4 +100,27 @@ input[type="text"]:focus, input[type="number"]:focus, select:focus {
     gap: 12px;
     align-items: center;
     margin-top: 5px;
+}
+
+.table-striped tbody tr {
+    background-color: rgb(198, 216, 237) !important;
+}
+
+/* Customize the student table background */
+.table-striped tbody tr {
+    background-color: rgb(198, 216, 237) !important;
+}
+
+/* Optional: If you want alternating striped colors with your blue, you can do this instead: */
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgb(174, 197, 224) !important;
+}
+
+.table-striped tbody tr:nth-of-type(even) {
+    background-color: #ffffff !important;
+}
+
+.custom-card {
+    background-color: rgb(198, 216, 237);
 }

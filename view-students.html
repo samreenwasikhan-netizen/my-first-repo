@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registered Students Records</title>
+    <!-- Keep Bootstrap for structure layout -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+    <!-- Link your custom styles here -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    
+<div class="container custom-card p-4 rounded shadow">
+        <div class="d-flex justify-content-between align-content-center mb-4">
+            <h2>Registered Students List</h2>
+            <a href="index.html" class="btn btn-outline-primary">Add New Student</a>
+        </div>
+
+        <table class="table table-striped table-bordered">
+            <thead class="" "table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Grade</th>
+                    <th>Age</th>
+                    <th>Gender</th>
+                    <th>Phone Number</th>
+                </tr>
+            </thead>
+            <tbody id="studentTableBody">
+                <tr>
+                    <td colspan="6" class="text-center">Loading student records...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', async () => {
+            const tableBody = document.getElementById('studentTableBody');
+
+            try {
+                // This fetches directly from your live C# API backend!
+                const response = await fetch('http://localhost:5052/api/students');
+                if (!response.ok) throw new Error('Failed to fetch data');
+
+                const students = await response.json();
+                tableBody.innerHTML = '';
+
+                if (students.length === 0) {
+                    tableBody.innerHTML = '<tr><td colspan="6" class="text-center text-muted">No student records found.</td></tr>';
+                    return;
+                }
+
+                students.forEach(student => {
+                    const row = `
+                        <tr>
+                            <td>${student.id}</td>
+                            <td>${student.name}</td>
+                            <td>${student.grade}</td>
+                            <td>${student.age}</td>
+                            <td>${student.gender}</td>
+                            <td>${student.phoneNumber}</td>
+                        </tr>
+                    `;
+                    tableBody.innerHTML += row;
+                });
+
+            } catch (error) {
+                console.error(error);
+                tableBody.innerHTML = '<tr><td colspan="6" class="text-center text-danger">Error loading data. Make sure the backend API is running!</td></tr>';
+            }
+        });
+    </script>
+</body>
+
+</html>
